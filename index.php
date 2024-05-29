@@ -1,6 +1,6 @@
 <?php
 
-
+//Chạy globle trên toàn hệ thống
 session_start();
 
 require 'vendor\autoload.php';
