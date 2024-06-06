@@ -8,6 +8,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        echo __CLASS__ . '@' . __FUNCTION__;
+        $this->renderViewClient('home', [
+        ]);
     }
 }
