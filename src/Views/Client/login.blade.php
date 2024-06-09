@@ -1,21 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.master')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+@section('title')
+    Login
+@endsection
 
-    <!-- Latest compiled and minified CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Latest compiled JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-
-<body>
-
-    <div class="container">
+@section('content')
+ <div class="header"></div>
+    <div class="container ">
+       
         <h1 class="mt-5 mb-3 text-center">Login</h1>
 
         @if (!empty($_SESSION['error']))
@@ -28,7 +20,7 @@
             @endphp
         @endif
 
-        <div class="row">
+        <div class="row ">
             <form action="{{ url('handle-login') }}" method="POST">
                 <div class="mb-3 mt-3">
                     <label for="email" class="form-label">Email:</label>
@@ -44,7 +36,7 @@
             </form>
         </div>
     </div>
+    <div class="mb-25"></div>
 
-</body>
+@endsection
 
-</html>

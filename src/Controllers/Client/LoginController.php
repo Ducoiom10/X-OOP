@@ -35,8 +35,12 @@ class LoginController extends Controller
             if ($flag) {
 
                 $_SESSION['user'] = $user;
+                if ($user['type'] == 'admin') {
+                    header('Location: '. url('admin') );
+                    exit;
+                }
 
-                header('Location: ' . url('admin/') );
+                header('Location: ' . url('') );
                 exit;
             }
 

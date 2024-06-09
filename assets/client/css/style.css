@@ -249,6 +249,20 @@ mark {
   background-color: #4FD675;
 }
 
+
+/* discount badge */
+.discount-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: red;
+  color: white;
+  padding: 5px;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+
 /* overlay */
 .overlay {
   position: relative;

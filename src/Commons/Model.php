@@ -6,10 +6,9 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-
 class Model
 {
-    protected Connection|null $conn;
+    protected ?Connection $conn;
     protected QueryBuilder $queryBuilder;
     protected string $tableName;
 
@@ -25,7 +24,6 @@ class Model
         ];
 
         $this->conn = DriverManager::getConnection($connectionParams);
-
         $this->queryBuilder = $this->conn->createQueryBuilder();
     }
 
@@ -35,7 +33,7 @@ class Model
         return $this->queryBuilder
             ->select('*')
             ->from($this->tableName)
-            ->orderBy('id','desc')
+            ->orderBy('id', 'desc')
             ->fetchAllAssociative();
     }
 
@@ -49,7 +47,7 @@ class Model
 
     public function paginate($page = 1, $perPage = 10)
     {
-        $queryBuilder = clone($this->queryBuilder);
+        $queryBuilder = clone $this->queryBuilder;
 
         $totalPage = ceil($this->count() / $perPage);
 
@@ -60,10 +58,15 @@ class Model
             ->from($this->tableName)
             ->setFirstResult($offset)
             ->setMaxResults($perPage)
-            ->orderBy('id desc')
+            ->orderBy('id', 'desc')
             ->fetchAllAssociative();
 
-        return [ $data, $totalPage];
+        return [$data, $totalPage];
+    }
+
+    public function getConnection()
+    {
+        return $this->conn;
     }
 
     public function findByID($id)
@@ -84,7 +87,6 @@ class Model
             $index = 0;
             foreach ($data as $key => $value) {
                 $query->setValue($key, '?')->setParameter($index, $value);
-
                 ++$index;
             }
 
@@ -108,7 +110,7 @@ class Model
             }
 
             $query->where('id = ?')
-                ->setParameter(count($data), $id)
+                ->setParameter($index, $id)
                 ->executeQuery();
 
             return true;

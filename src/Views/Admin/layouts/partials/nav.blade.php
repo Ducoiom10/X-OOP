@@ -7,16 +7,20 @@
     </div>
     <ul id="sidebar_menu">
         <li class="mm-active">
-            <a class="has-arrow" href="#" aria-expanded="false">
+            <a class="has-arrow" z href="{{ url('admin/users/' . '/') }}" aria-expanded="false">
                 <div class="icon_menu">
-                    <img src="{{ asset('assets/admin/img/menu-icon/dashboard.svg') }}" alt>
+                    
+                        <img src="{{ asset('assets/admin/img/menu-icon/6.svg') }}" alt>
+                    
                 </div>
-                <span>Dashboard</span>
+                <span>Users Management</span>
             </a>
-            <ul>
-                <li><a class="active" href="{{ url('admin/users/' . '/') }}">Users Management</a></li>
-                <li><a class="active" href="{{ url('admin/products/' . '/') }}">Products Management</a></li>
-            </ul>
+            <a class="has-arrow" href="{{ url('admin/products/' ) }}" aria-expanded="false">
+                <div class="icon_menu">
+                    <img src="{{ asset('assets/admin/img/menu-icon/6.svg') }}" alt>
+                </div>
+                <span>Products Management</span>
+            </a>
         </li>
 
         {{-- <li class>
@@ -32,7 +36,7 @@
                 <div class="icon_menu">
                     <img src="{{ asset('assets/admin/img/menu-icon/5.svg') }}" alt>
                 </div>
-                <span>Board</span>
+                <span>Home</span>
             </a>
         </li>
 
