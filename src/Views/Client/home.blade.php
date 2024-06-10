@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- end of banner -->
 
 
@@ -70,6 +70,90 @@
             stroke-width="2" />
     </svg>
 
-    
+    <section class="section pb-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5">
+                    <h2 class="h5 section-title">NEW POST</h2>
+                    <?php foreach ($latestNews as $news): ?>
+                    <article class="card">
+                        <div class="post-slider slider-sm">
+                            <img class="card-img-top" style="max-height: 360px; min-height: 360px;"
+                                src="{{ asset($news['image']) }}" alt="Post">
+                        </div>
+
+                        <div class="card-body">
+                            <h3 class="h4 mb-3"><a class="post-title text-decoration-none"
+                                    href="{{ url('') }}"><?= $news['title'] ?></a></h3>
+                            <ul class="card-meta list-inline">
+                                <li class="list-inline-item">
+                                    <i class="ti-timer"></i><?= $news['created_at'] ?>
+                                </li>
+                            </ul>
+                            <p>
+                                <?= strlen($news['content']) > 50 ? substr($news['content'], 0, 50) . '...' : $news['content'] ?>
+                            </p>
+
+                            <a href="{{ url('') }}" class="btn btn-outline-primary">Read More</a>
+                        </div>
+                    </article>
+                    <?php endforeach; ?>
+                </div>
+
+                <div class="col-lg-4 mb-5">
+                    <h2 class="h5 section-title">Trending Post</h2>
+
+                    <?php foreach ($topNews as $news): ?>
+                    <article class="card mb-4">
+                        <div class="card-body d-flex">
+                            <img class="card-img-sm" src="<?= $news['image'] ?>">
+                            <div class="ml-3">
+                                <h4><a href="{{ url('') }}" class="post-title"><?= $news['title'] ?></a></h4>
+                                <ul class="card-meta list-inline mb-0">
+                                    <li class="list-inline-item mb-0">
+                                        <i class="ti-calendar"></i><?= $news['created_at'] ?>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+                    <?php endforeach; ?>
+                </div>
+
+
+                <div class="col-lg-4 mb-5">
+                    <h2 class="h5 section-title">NEW POST</h2>
+                    <?php foreach ($latestNews as $news): ?>
+                    <article class="card">
+                        <div class="post-slider slider-sm">
+                            <img class="card-img-top" style="max-height: 360px; min-height: 360px;"
+                                src="{{ asset($news['image']) }}" alt="Post">
+                        </div>
+
+                        <div class="card-body">
+                            <h3 class="h4 mb-3"><a class="post-title text-decoration-none"
+                                    href="{{ url('') }}"><?= $news['title'] ?></a></h3>
+                            <ul class="card-meta list-inline">
+                                <li class="list-inline-item">
+                                    <i class="ti-timer"></i><?= $news['created_at'] ?>
+                                </li>
+                            </ul>
+                            <p>
+                                <?= strlen($news['content']) > 50 ? substr($news['content'], 0, 50) . '...' : $news['content'] ?>
+                            </p>
+
+                            <a href="{{ url('') }}" class="btn btn-outline-primary">Read More</a>
+                        </div>
+                    </article>
+                    <?php endforeach; ?>
+                </div>
+                <div class="col-12">
+                    <div class="border-bottom border-default"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
 
 @endsection

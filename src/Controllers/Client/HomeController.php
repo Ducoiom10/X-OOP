@@ -5,6 +5,7 @@ namespace Ducna\XOop\Controllers\Client;
 use Ducna\XOop\Commons\Controller;
 use Ducna\XOop\Commons\Helper;
 use Ducna\XOop\Models\Category;
+use Ducna\XOop\Models\News;
 use Ducna\XOop\Models\Product;
 use Illuminate\Http\Request;
 
@@ -21,27 +22,41 @@ class HomeController extends Controller
 
     public function index()
     {
+        // Lấy danh sách sản phẩm
         [$products, $totalPage] = $this->product->paginate($_GET['page'] ?? 1);
-        $categories = $this->category->all();
+        
+        // Danh sách sản phẩm 
+        $listProduct = $this -> product ->all();
 
-        // Truyền dữ liệu đã phân trang và danh mục vào view
+        // Lấy danh sách danh mục
+        $categories = $this->category->all();
+        
+        // Lấy tin tức mới nhất
+        $latestNews = (new News())->getLatestNews();
+        $topNews = (new News())->getTopNews();
+        
+        // Truyền dữ liệu đã phân trang, danh mục và tin tức mới nhất vào view
         $this->renderViewClient(
             'home',
             [
                 'products' => $products,
+                'listProduct' => $listProduct,
                 'totalPage' => $totalPage,
                 'categories' => $categories,
+                'latestNews' => $latestNews,
+                'topNews' => $topNews 
             ]
         );
     }
-
     public function shop()
     {
         [$products, $totalPage] = $this->product->paginate($_GET['page'] ?? 1);
-
+        
+        // helper::debug($products);
+        // die();
         // Truyền dữ liệu đã phân trang vào view
         $this->renderViewClient(
-            'product.shop',
+            'product.products',
             [
                 'products' => $products,
                 'totalPage' => $totalPage,

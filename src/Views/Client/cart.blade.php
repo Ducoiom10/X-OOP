@@ -7,14 +7,13 @@
         <h1 class="mt-5 mb-3 text-center">Shopping Cart</h1>
         <div class="row">
             @if (!isset($_SESSION['user']))
-            <span class="text-danger text-center form-control-lg">
-                ! Bạn cần đăng nhập để thực hiện thanh toán
-            </span>
-        @endif
+                <span class="text-danger text-center form-control-lg">
+                    ! Bạn cần đăng nhập để thực hiện thanh toán
+                </span>
+            @endif
 
-        @if (isset($_SESSION['user']))
-            
-        @endif
+            @if (isset($_SESSION['user']))
+            @endif
         </div>
         <div class="row">
 
@@ -68,25 +67,26 @@
                     <div class="mb-3 mt-3">
                         <label for="name" class="form-label">Name:</label>
                         <input type="text" class="form-control" id="name"
-                            value="{{ $_SESSION['user']['name'] ?? '' }}" placeholder="Enter name" name="user_name">
+                            value="{{ $_SESSION['user']['name'] ?? '' }}" placeholder="Enter name" name="user_name"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email:</label>
                         <input type="email" class="form-control" id="email"
-                            value="{{ $_SESSION['user']['email'] ?? '' }}" placeholder="Enter email"
-                            name="user_email">
+                            value="{{ $_SESSION['user']['email'] ?? '' }}" placeholder="Enter email" name="user_email"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">Phone:</label>
                         <input type="text" class="form-control" id="phone"
-                            value="{{ $_SESSION['user']['phone'] ?? '' }}" placeholder="Enter phone"
-                            name="user_phone">
+                            value="{{ $_SESSION['user']['phone'] ?? '' }}" placeholder="Enter phone" name="user_phone"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">Address:</label>
                         <input type="text" class="form-control" id="address"
                             value="{{ $_SESSION['user']['address'] ?? '' }}" placeholder="Enter address"
-                            name="user_address">
+                            name="user_address" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

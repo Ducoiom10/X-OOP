@@ -33,31 +33,28 @@
                         </a>
                     </li> --}}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('shop') }}">Shop</a>
+                        <a class="nav-link" href="{{ url('products') }}">Shop</a>
                     </li>
                 </ul>
             </div>
             <div class="order-2 order-lg-3 d-flex align-items-center">
-                <form class="search-bar" action="{{ url('search') }}" method="POST">
-                    <input type="text" name="keyword" placeholder="Nhập từ khóa tìm kiếm">
-                    <button type="submit">Tìm kiếm</button>
+                <form class="search-bar d-flex me-3" action="{{ url('search') }}" method="POST">
+                    <input type="text" name="keyword" class="form-control me-2" placeholder="Nhập từ khóa tìm kiếm">
+                    <button type="submit" class="btn btn-primary">Search</button>
                 </form>
-                
-                <div class="container">
-                    <div class="row">
-                        <nav>
-                            @if (isset($_SESSION['user']))
-                                @if ($_SESSION['user']['type'] == 'admin')
-                                    <a class="btn btn-primary" href="{{ url('admin') }}">Admin</a>
-                                @endif
-                                <a class="btn btn-primary" href="{{ url('logout') }}">Logout</a>
-                            @else
-                                <a class="btn btn-primary" href="{{ url('login') }}">Login</a>
-                            @endif
-                        </nav>
-                    </div>
-                </div>
+            
+                <nav class="ms-auto">
+                    @if (isset($_SESSION['user']))
+                        @if ($_SESSION['user']['type'] == 'admin')
+                            <a class="btn btn-secondary me-2" href="{{ url('admin') }}">Admin</a>
+                        @endif
+                        <a class="btn btn-primary" href="{{ url('logout') }}">Logout</a>
+                    @else
+                        <a class="btn btn-primary" href="{{ url('login') }}">Login</a>
+                    @endif
+                </nav>
             </div>
+            
         </nav>
     </div>
 </header>

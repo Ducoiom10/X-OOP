@@ -1,18 +1,5 @@
 <?php
 
-// Website có các trang là:
-//      Trang chủ
-//      Giới thiệu
-//      Sản phẩm
-//      Chi tiết sản phẩm
-//      Liên hệ
-
-// Để định nghĩa được, điều đầu tiên làm là phải tạo Controller trước
-// Tiếp theo, khai function tương ứng để xử lý
-// Bước cuối, định nghĩa đường dẫn
-
-// HTTP Method: get, post, put (path), delete, option, head
-
 use Ducna\XOop\Controllers\Client\AboutController;
 use Ducna\XOop\Controllers\Client\CartController;
 use Ducna\XOop\Controllers\Client\CategoryController;
@@ -22,32 +9,30 @@ use Ducna\XOop\Controllers\Client\LoginController;
 use Ducna\XOop\Controllers\Client\OrderController;
 use Ducna\XOop\Controllers\Client\ProductController;
 
-$router->get( '/',                  HomeController::class       . '@index');
-$router->get('/shop',               HomeController::class       . '@shop');
-$router->post( '/search',           HomeController::class       . '@search');
+// Định nghĩa các routes
+$router->get('/', HomeController::class . '@index'); // Trang chủ
+$router->get('/products', HomeController::class . '@shop'); // Trang danh sách sản phẩm
+$router->post('/search', HomeController::class . '@search'); // Tìm kiếm sản phẩm
 
+$router->get('/about', AboutController::class . '@all'); // Trang giới thiệu
 
-$router->get( '/about',             AboutController::class      . '@all');
+$router->get('/contact', ContactController::class . '@index'); // Trang liên hệ
+$router->post('/contact/store', ContactController::class . '@store'); // Xử lý form liên hệ
 
-$router->get( '/contact',           ContactController::class    . '@index');
-$router->post( '/contact/store',    ContactController::class    . '@store');
+$router->get('/products/{id}', ProductController::class . '@detail'); // Chi tiết sản phẩm
 
-$router->get( '/products',          ProductController::class    . '@index');
-$router->get( '/products/{id}',     ProductController::class    . '@detail');
+$router->get('/category/{id}', CategoryController::class . '@showProductsByCategory'); // Hiển thị sản phẩm theo danh mục
 
-$router->get('/category/{id}',     CategoryController::class    . '@showProductsByCategory');
+$router->get('/error', CartController::class . '@index'); // Trang lỗi
 
-$router->get( '/error',              CartController::class      . '@index');
+$router->get('/login', LoginController::class . '@showFormLogin'); // Form đăng nhập
+$router->post('/handle-login', LoginController::class . '@login'); // Xử lý đăng nhập
+$router->get('/logout', LoginController::class . '@logout'); // Đăng xuất
 
+$router->get('/cart/add', CartController::class . '@add'); // Thêm sản phẩm vào giỏ hàng
+$router->get('/cart/quantityInc', CartController::class . '@quantityInc'); // Tăng số lượng sản phẩm trong giỏ hàng
+$router->get('/cart/quantityDec', CartController::class . '@quantityDec'); // Giảm số lượng sản phẩm trong giỏ hàng
+$router->get('/cart/remove', CartController::class . '@remove'); // Xóa sản phẩm khỏi giỏ hàng
+$router->get('/cart/detail', CartController::class . '@detail'); // Xem chi tiết giỏ hàng
 
-$router->get( '/login',             LoginController::class    . '@showFormLogin');
-$router->post( '/handle-login',     LoginController::class    . '@login');
-$router->get( '/logout',            LoginController::class    . '@logout');
-
-$router->get('cart/add',           CartController::class . '@add');
-$router->get('cart/quantityInc',   CartController::class . '@quantityInc');
-$router->get('cart/quantityDec',   CartController::class . '@quantityDec');
-$router->get('cart/remove',        CartController::class . '@remove');
-$router->get('cart/detail',        CartController::class . '@detail');
-
-$router->post('order/checkout',     OrderController::class . '@checkout');
+$router->post('/order/checkout', OrderController::class . '@checkout'); // Xử lý đặt hàng

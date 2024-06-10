@@ -69,25 +69,24 @@
         </svg>
     </div>
     <div class="container">
-
         <div class="row">
             @foreach ($products as $product)
                 <div class="col-md-3 mb-2 mt-2">
                     <div class="card">
                         <a href="{{ url('products/' . $product['id']) }}">
-                            <img class="card-img-top" style="max-height: 330px" src="{{ asset($product['img_thumbnail']) }}"
+                            <img class="card-img-top" style="max-height: 320px; min-height: 320px;" src="{{ asset($product['img_thumbnail']) }}"
                                 alt="Card image">
                         </a>
                         <div class="card-body">
-                            <h4 class="card-title">
+                            <h4 class="card-title text-[36px]" style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                 <a class="text text-decoration-none" href="{{ url('products/' . $product['id']) }}">
                                     {{ $product['name'] }}
                                 </a>
                             </h4>
+                            
                             @if (isset($product['price_sale']) && $product['price_sale'] < $product['price_regular'])
                                 <p class="card-text ">
-                                    <span
-                                        class="form-control-lg">{{ number_format($product['price_regular'] - $product['price_sale'], 0, ',', '.') }}
+                                    <span class="form-control-lg">{{ number_format($product['price_regular'] - $product['price_sale'], 0, ',', '.') }}
                                         VND </span>
                                     <br>
                                     <del class="form-control-sm m-lg-1">{{ number_format($product['price_regular'], 0, ',', '.') }}
@@ -110,16 +109,30 @@
 
         <div class="row">
             <ul class="pagination">
+                @php
+                    $currentPage = isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0 ? min($_GET['page'], $totalPage) : 1;
+                @endphp
+        
+                {{-- Nút "<<" để quay lại trang trước --}}
+                <li class="{{ $currentPage <= 1 ? 'disabled' : '' }}">
+                    <a class="btn" href="{{ $currentPage > 1 ? url('shop') . '?page=' . ($currentPage - 1) : url('shop') }}"><<</a>
+                </li>
+        
+                {{-- Hiển thị các trang --}}
                 @for ($i = 1; $i <= $totalPage; $i++)
-                    <li class="page-item">
-                        <a class="page-link {{ ($_GET['page'] ?? 1) == $i ? 'active' : '' }}" href="{{ url('shop') }}?page={{ $i }}">{{ $i }}</a>
+                    <li class="bg-gradient{{ $currentPage == $i ? ' active' : '' }}">
+                        <a class="btn" href="{{ url('shop') }}?page={{ $i }}">{{ $i }}</a>
                     </li>
                 @endfor
-                <li class="page-item">
-                    <a class="page-link" href="{{ url('shop') }}?page={{ ($_GET['page'] ?? 1) + 1 }}">Next</a>
+        
+                {{-- Nút ">>" để đi tới trang kế tiếp --}}
+                <li class="{{ $currentPage >= $totalPage ? 'disabled' : '' }}">
+                    <a class="btn" href="{{ $currentPage < $totalPage ? url('shop') . '?page=' . ($currentPage + 1) : url('shop') . '?page=' . $totalPage }}">>></a>
                 </li>
             </ul>
-        </div> 
+        </div>
+        
+        
         
 
 

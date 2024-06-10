@@ -2,48 +2,28 @@
 
 namespace Ducna\XOop\Controllers\Client;
 
-use Doctrine\DBAL\Exception\InvalidArgumentException;
 use Ducna\XOop\Commons\Controller;
+use Ducna\XOop\Commons\Helper;
 use Ducna\XOop\Models\Product;
 
-class ProductController
+class ProductController extends Controller
 {
-    private $productModel;
+    private Product $product;
 
-    public function __construct(Product $productModel)
+    public function __construct()
     {
-        $this->productModel = $productModel;
-        $this->productModel = new Product();
+        $this->product = new Product();
     }
-
-
-    public function detail($id)
-    {
-        try {
-            if (!is_numeric($id) || $id <= 0) {
-                throw new InvalidArgumentException('Invalid product ID.');
-            }
-            // Sử dụng phương thức findByID từ model Product
-            $product = $this->productModel->findByID($id);
-
-            $this->renderView('product-detail', [
-                'product' => $product
-            ]);
-        } catch (\Exception $e) {
-            $this->renderError($e->getMessage());
-        }
-    }
-
     
 
-    // Phương thức renderView và renderError vẫn giữ nguyên không thay đổi
-    private function renderView($view, $data = [])
-    {
-        // Implement view rendering logic here
+    public function detail($id) {
+        $product = $this->product->findByID($id); 
+        // Helper::debug($product);
+        // die();
+        $this->renderViewClient('product.product-detail', [
+            'product' => $product
+        ]);
+        
     }
 
-    private function renderError($message)
-    {
-        // Implement error rendering logic here
-    }
 }
