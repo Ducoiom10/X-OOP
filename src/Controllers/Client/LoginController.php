@@ -25,30 +25,28 @@ class LoginController extends Controller
         auth_check();
 
         try {
+            if (!isset($_POST['email']) || !isset($_POST['password'])) {
+                throw new \Exception('Vui lòng nhập email và mật khẩu.');
+            }
+
             $user = $this->user->findByEmail($_POST['email']);
 
             if (empty($user)) {
-                throw new \Exception('Không tồn tại email: ' . $_POST['email']);
+                throw new \Exception('Không tồn tại email hoặc mật khẩu không đúng.');
             }
 
             $flag = password_verify($_POST['password'], $user['password']); 
             if ($flag) {
-
                 $_SESSION['user'] = $user;
-                if ($user['type'] == 'admin') {
-                    header('Location: '. url('admin') );
-                    exit;
-                }
-
-                header('Location: ' . url('') );
+                $redirectUrl = $user['type'] == 'admin' ? url('admin') : url('');
+                header('Location: '. $redirectUrl);
                 exit;
             }
 
-            throw new \Exception('Password không đúng');
+            throw new \Exception('Email hoặc mật khẩu không đúng.');
         } catch (\Throwable $th) {
             $_SESSION['error'] = $th->getMessage();
-
-            header('Location: ' . url('login') );
+            header('Location: ' . url('login'));
             exit;
         }
     }

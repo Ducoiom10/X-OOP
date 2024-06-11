@@ -79,14 +79,28 @@ class Model
             ->fetchAssociative();
     }
 
+    public function findByProductIdAndOrderId($productId, $orderId)
+{
+    return $this->queryBuilder
+        ->select('*')
+        ->from($this->tableName)
+        ->where('product_id = ?')
+        ->andWhere('order_id = ?')
+        ->setParameter(0, $productId)
+        ->setParameter(1, $orderId)
+        ->fetchAssociative();
+}
+
+
     public function insert(array $data)
     {
         if (!empty($data)) {
             $query = $this->queryBuilder->insert($this->tableName);
 
             $index = 0;
-            foreach ($data as $key => $value) {
+            foreach($data as $key => $value) {
                 $query->setValue($key, '?')->setParameter($index, $value);
+                
                 ++$index;
             }
 
@@ -94,7 +108,7 @@ class Model
 
             return true;
         }
-
+        
         return false;
     }
 

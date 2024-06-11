@@ -8,6 +8,8 @@ use Ducna\XOop\Models\CartDetail;
 use Ducna\XOop\Models\Order;
 use Ducna\XOop\Models\OrderDetail;
 use Ducna\XOop\Models\User;
+use Ducna\XOop\Commons\Helper;
+
 
 class OrderController extends Controller
 {    
@@ -63,9 +65,11 @@ class OrderController extends Controller
         if (isset($_SESSION['user'])) {
             $key .= '-' . $_SESSION['user']['id'];
         }
-    
+
         // Lặp qua các mục trong giỏ hàng và thêm chi tiết đơn hàng vào bảng order_detail
         foreach ($_SESSION[$key] as $productID => $item) {
+            // Helper::debug($orderID);
+            // die();
             $this->orderDetail->insert([
                 'order_id' => $orderID,
                 'product_id' => $productID,
@@ -73,6 +77,7 @@ class OrderController extends Controller
                 'price_regular' => $item['price_regular'],
                 'price_sale' => $item['price_sale'], // Cập nhật nếu có thông tin giá giảm giá
             ]);
+            
         }
     }
     
@@ -88,6 +93,8 @@ class OrderController extends Controller
             'type' => 'member',
             'is_active' => 0,
         ]);
+
+        
         
         // Trả về ID của người dùng mới tạo
         return $this->user->getConnection()->lastInsertId();

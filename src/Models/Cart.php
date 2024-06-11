@@ -4,11 +4,12 @@ namespace Ducna\XOop\Models;
 
 use Ducna\XOop\Commons\Model;
 
-class Cart extends Model 
+class Cart extends Model
 {
     protected string $tableName = 'carts';
 
-    public function findByUserID($userID) {
+    public function findByUserID($userID)
+    {
         return $this->queryBuilder
             ->select('*')
             ->from($this->tableName)
@@ -17,11 +18,11 @@ class Cart extends Model
             ->fetchAssociative();
     }
     public function countCarts()
-{
-    return $this->queryBuilder
-        ->select('COUNT(*) AS count')
-        ->from('carts')
-        ->fetchOne();
-}
+    {
+        return $this->queryBuilder
+            ->select('COUNT(*) AS count')
+            ->from('carts')
+            ->fetchOne();
+    }
 
 }

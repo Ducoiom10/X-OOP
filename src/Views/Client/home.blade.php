@@ -186,8 +186,8 @@
                             <p class="card-text">{{ number_format($topProduct['price_regular'], 0, ',', '.') }} VND</p>
                         @endif
 
-                        <a href="{{ url('cart/add') }}?quantity=1&productID={{ $product['id'] }}"
-                            class="btn btn-primary w-100">Thêm vào giỏ hàng</a>
+                        <a href="{{ url('cart/add') }}?quantity=1&productID={{ $topProduct['id'] }}"
+                                class="btn btn-primary w-100">Thêm vào giỏ hàng</a>
                     </div>
                 </div>
             </div>
