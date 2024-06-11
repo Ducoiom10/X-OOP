@@ -13,6 +13,7 @@
 use Ducna\XOop\Controllers\Admin\DashboardController;
 use Ducna\XOop\Controllers\Admin\ProductController;
 use Ducna\XOop\Controllers\Admin\UserController;
+use Ducna\XOop\Controllers\Admin\CategoryController;
 
 $router->before('GET|POST', '/admin/*.*', function() {
     if (! isset($_SESSION['user'])) {
@@ -35,6 +36,18 @@ $router->mount('/admin', function () use ($router) {
         $router->post('/{id}/update',   ProductController::class . '@update'); // Lưu sửa vào DB
         $router->get('/{id}/delete',    ProductController::class . '@delete'); // Xóa
     });
+
+    // CRUD CATEGORY
+    $router->mount('/categories', function () use ($router) {
+        $router->get('/',               CategoryController::class . '@index');
+        $router->get('/create',         CategoryController::class . '@create');
+        $router->post('/store',         CategoryController::class . '@store');
+        $router->get('/{id}/show',      CategoryController::class . '@show');
+        $router->get('/{id}/edit',      CategoryController::class . '@edit');
+        $router->post('/{id}/update',   CategoryController::class . '@update');
+        $router->get('/{id}/delete',    CategoryController::class . '@delete');
+    });
+    
 
     // CRUD USER
     $router->mount('/users', function () use ($router) {

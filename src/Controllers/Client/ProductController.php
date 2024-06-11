@@ -6,6 +6,7 @@ use Ducna\XOop\Commons\Controller;
 use Ducna\XOop\Commons\Helper;
 use Ducna\XOop\Models\Product;
 
+
 class ProductController extends Controller
 {
     private Product $product;
@@ -14,16 +15,23 @@ class ProductController extends Controller
     {
         $this->product = new Product();
     }
-    
 
-    public function detail($id) {
-        $product = $this->product->findByID($id); 
+
+    public function detail($id)
+    {
+        // Tăng số lượt xem cho sản phẩm
+        $this->product->increaseViewCount($id);
+        // Lấy thông tin sản phẩm theo ID
+        $product = $this->product->findByID($id);
+
         // Helper::debug($product);
         // die();
         $this->renderViewClient('product.product-detail', [
             'product' => $product
         ]);
-        
+
     }
+
+
 
 }

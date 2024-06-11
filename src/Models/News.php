@@ -31,4 +31,12 @@ class News extends Model
 
         return $queryBuilder->fetchAllAssociative();
     }
+    public function countNews()
+    {
+        return $this->queryBuilder
+            ->select('COUNT(*) AS count')
+            ->from('news')
+            ->fetchOne();
+    }
+
 }

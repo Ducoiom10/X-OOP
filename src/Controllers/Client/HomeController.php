@@ -18,40 +18,46 @@ class HomeController extends Controller
     {
         $this->product = new Product();
         $this->category = new Category();
+        
     }
 
     public function index()
     {
         // Lấy danh sách sản phẩm
         [$products, $totalPage] = $this->product->paginate($_GET['page'] ?? 1);
-        
+
         // Danh sách sản phẩm 
-        $listProduct = $this -> product ->all();
+        $listProduct = $this->product->all();
+
+        // Lấy danh sách 4 sản phẩm có số lượt xem cao nhất
+        $mostViewedProducts = $this->product->getMostViewedProducts(4);
+
 
         // Lấy danh sách danh mục
         $categories = $this->category->all();
-        
+
         // Lấy tin tức mới nhất
         $latestNews = (new News())->getLatestNews();
         $topNews = (new News())->getTopNews();
-        
+
         // Truyền dữ liệu đã phân trang, danh mục và tin tức mới nhất vào view
         $this->renderViewClient(
             'home',
             [
                 'products' => $products,
                 'listProduct' => $listProduct,
+                'mostViewedProducts' => $mostViewedProducts,
                 'totalPage' => $totalPage,
                 'categories' => $categories,
                 'latestNews' => $latestNews,
-                'topNews' => $topNews 
+                'topNews' => $topNews
             ]
         );
     }
     public function shop()
     {
         [$products, $totalPage] = $this->product->paginate($_GET['page'] ?? 1);
-        
+
         // helper::debug($products);
         // die();
         // Truyền dữ liệu đã phân trang vào view
@@ -63,6 +69,7 @@ class HomeController extends Controller
             ]
         );
     }
+    
 
     public function search()
     {
@@ -84,9 +91,9 @@ class HomeController extends Controller
                 ]
             );
         } else {
-            
-            
+
+
         }
     }
-    
+
 }

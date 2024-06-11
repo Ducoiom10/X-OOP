@@ -17,4 +17,12 @@ class User extends Model
             ->setParameter(0, $email)
             ->fetchAssociative();
     }
+    public function countUsers()
+{
+    return $this->queryBuilder
+        ->select('COUNT(*) AS count')
+        ->from('users')
+        ->fetchOne();
+}
+
 }

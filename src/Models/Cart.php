@@ -16,4 +16,12 @@ class Cart extends Model
             ->setParameter(0, $userID)
             ->fetchAssociative();
     }
+    public function countCarts()
+{
+    return $this->queryBuilder
+        ->select('COUNT(*) AS count')
+        ->from('carts')
+        ->fetchOne();
+}
+
 }

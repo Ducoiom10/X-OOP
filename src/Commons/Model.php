@@ -119,6 +119,31 @@ class Model
         return false;
     }
 
+    public function increaseViewCount($id)
+    {
+        // Tăng giá trị của trường 
+        $this->queryBuilder
+            ->update($this->tableName)
+            ->set('views', 'views + 1')
+            ->where('id = :id')
+            ->setParameter('id', $id)
+            ->executeQuery();
+
+        return true; // Trả về true nếu tăng số lượt xem thành công
+    }
+
+    public function getMostViewedProducts($limit)
+    {
+        return $this->queryBuilder
+            ->select('*')
+            ->from($this->tableName)
+            ->orderBy('views', 'DESC')
+            ->setMaxResults($limit)
+            ->fetchAllAssociative();
+    }
+
+
+
     public function delete($id)
     {
         return $this->queryBuilder

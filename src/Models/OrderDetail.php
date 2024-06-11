@@ -1,11 +1,13 @@
 <?php
+
 namespace Ducna\XOop\Models;
 
 use Ducna\XOop\Commons\Model;
 
 class OrderDetail extends Model
 {
-    protected string $tableName = 'order_details';
+    protected string $ordersTable = 'orders';
+    protected string $orderDetailsTable = 'order_details';
 
     public function __construct()
     {
@@ -13,46 +15,38 @@ class OrderDetail extends Model
         $this->queryBuilder = $this->conn->createQueryBuilder();
     }
 
-    public function salesByDate()
-    {
-        try {
-            return $this->queryBuilder
-                ->select('DATE(created_at) as date', 'SUM(total_price) as total_sales', 'COUNT(*) as total_orders')
-                ->from($this->tableName)
-                ->groupBy('DATE(created_at)')
-                ->orderBy('date', 'asc')
-                ->fetchAllAssociative();
-        } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
+    public function salesByDateMonthYear()
+{
+    try {
+        $result = $this->queryBuilder
+            ->select('DATE(o.created_at) as date', 'YEAR(o.created_at) as year', 'MONTH(o.created_at) as month', 'SUM((od.price_regular - od.price_sale) * od.quantity) as total_sales', 'COUNT(DISTINCT o.id) as total_orders')
+            ->from($this->orderDetailsTable, 'od')
+            ->innerJoin('od', $this->ordersTable, 'o', 'od.order_id = o.id')
+            ->groupBy('DATE(o.created_at)', 'YEAR(o.created_at)', 'MONTH(o.created_at)')
+            ->orderBy('year', 'asc')
+            ->addOrderBy('month', 'asc')
+            ->addOrderBy('date', 'asc')
+            ->fetchAllAssociative();
+
+        // Kiểm tra kết quả truy vấn trước khi sử dụng
+        if ($result === false) {
+            throw new \Exception("Failed to retrieve sales by date, month, and year.");
         }
+
+        return $result;
+    } catch (\Exception $e) {
+        return ['error' => $e->getMessage()];
+    }
+}
+
+    public function countOrderDetails()
+    {
+        return $this->queryBuilder
+            ->select('COUNT(*) AS count')
+            ->from('order_details')
+            ->fetchOne();
     }
 
-    public function salesByMonth()
-    {
-        try {
-            return $this->queryBuilder
-                ->select('YEAR(created_at) as year', 'MONTH(created_at) as month', 'SUM(total_price) as total_sales', 'COUNT(*) as total_orders')
-                ->from($this->tableName)
-                ->groupBy('YEAR(created_at)', 'MONTH(created_at)')
-                ->orderBy('year', 'asc')
-                ->orderBy('month', 'asc')
-                ->fetchAllAssociative();
-        } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
-        }
-    }
 
-    public function salesByYear()
-    {
-        try {
-            return $this->queryBuilder
-                ->select('YEAR(created_at) as year', 'SUM(total_price) as total_sales', 'COUNT(*) as total_orders')
-                ->from($this->tableName)
-                ->groupBy('YEAR(created_at)')
-                ->orderBy('year', 'asc')
-                ->fetchAllAssociative();
-        } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
-        }
-    }
+
 }

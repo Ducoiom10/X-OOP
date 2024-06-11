@@ -12,7 +12,7 @@
             <div class="collapse navbar-collapse text-center order-lg-2 order-3" id="navigation">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link" href="{{ url('home') }}" role="button" data-toggle="dropdown"
+                        <a class="nav-link" href="{{ url('/') }}" role="button" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             Home </i>
                         </a>
@@ -42,7 +42,7 @@
                     <input type="text" name="keyword" class="form-control me-2" placeholder="Nhập từ khóa tìm kiếm">
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
-            
+                
                 <nav class="ms-auto">
                     @if (isset($_SESSION['user']))
                         @if ($_SESSION['user']['type'] == 'admin')

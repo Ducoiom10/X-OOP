@@ -2,6 +2,7 @@
 <script src="{{ asset('assets/admin/js/popper1.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/admin/js/metisMenu.js') }}"></script>
+<script src="{{ asset('assets/admin/js/Chart.js') }}"></script>
 <script src="{{ asset('assets/admin/vendors/count_up/jquery.waypoints.min.js') }}"></script>
 <script src="{{ asset('assets/admin/vendors/chartlist/Chart.min.js') }}"></script>
 <script src="{{ asset('assets/admin/vendors/count_up/jquery.counterup.min.js') }}"></script>
@@ -39,3 +40,4 @@
 <script src="{{ asset('assets/admin/vendors/chart_am/chart-custom.js') }}"></script>
 <script src="{{ asset('assets/admin/js/dashboard_init.js') }}"></script>
 <script src="{{ asset('assets/admin/js/custom.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
